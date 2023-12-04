@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your token</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background-color: #f0f0f0;
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        .logo {
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        h1 {
+            font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif;
+            font-size: 28px;
+            font-weight: 300;
+            color: #666;
+            margin: 0;
+            padding-bottom: 1em;
+            text-align: left;
+        }
+
+        p {
+            font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif;
+            font-size: 18px;
+            color: #666;
+            margin: 0;
+            line-height: 24px;
+            text-align: left;
+            padding-bottom: 3%;
+        }
+
+        .footer {
+            background-color: #f0f0f0;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-family: 'Nunito Sans', Arial, Verdana, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #777;
+            margin: 0;
+            line-height: 24px;
+        }
+
+        .footer a {
+            color: #777;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<table align="center" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#f0f0f0">
+    <tr>
+        <td style="padding: 30px 30px 20px 30px;">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#ffffff" style="max-width: 650px; margin: auto;">
+                <tr>
+                    <td colspan="2" align="center" class="logo">
+                        <a href="https://codenexus.id" target="_blank"><img src="https://res.cloudinary.com/dyominih0/image/upload/v1701723610/zt4hkqozjvq4tl7buk7j.png" border="0" style="width: 300px;" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding: 0px 50px;" valign="top">
+                        <p><strong>Dear {{.Username}},</strong></p>
+                        <p>We hope this message finds you well. As part of our commitment to maintaining a secure environment for our CodeNexus community, we are providing you with a Token for your account.</p>
+                        <p><strong>Your Token:{{.Token}}</strong> </p>
+                        <p>Please use this Token to enhance the security of your CodeNexus account. Kindly ensure that you keep this information confidential. If you did not request this Token or have any concerns about the security of your account, please contact our support team immediately at <a href="mailto:codenexus@email.com">[cs.codenexus@codenexus.id]</a>.</p>
+
+                        <p>Thank you for being a part of the CodeNexus community. We appreciate your commitment to fostering a collaborative and secure coding environment.</p>
+
+                        <br>
+                        <p><strong>Best regards,</strong></p><br>
+                        <p><strong>Rian Ihsan Ardiansyah<br>Backend developer<br>CodeNexus Team</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding: 30px 50px 50px 50px" valign="top">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" class="footer">
+                        <p>
+                            <a href="https://codenexus.id" target="_blank">Code Nexus Team</a>
+                            <br>
+                            CodeNexus is more than a platform; it's a movement. Join us in shaping the future of software development. Happy coding!
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

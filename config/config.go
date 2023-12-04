@@ -8,9 +8,10 @@ import (
 )
 
 type Config struct {
-	AppPort  int
-	Token    string
-	Database database
+	AppPort     int
+	Token       string
+	Database    database
+	EmailConfig email
 }
 
 type database struct {
@@ -19,6 +20,13 @@ type database struct {
 	DbUser string
 	DbPass string
 	DbName string
+}
+
+type email struct {
+	Host     string
+	Sender   string
+	Password string
+	MailPort int
 }
 
 func BootConfig() *Config {
@@ -72,6 +80,27 @@ func loadConfig() *Config {
 
 	if value, found := os.LookupEnv("DBNAME"); found {
 		res.Database.DbName = value
+	}
+
+	if value, found := os.LookupEnv("SMTP_USER"); found {
+		res.EmailConfig.Sender = value
+	}
+
+	if value, found := os.LookupEnv("SMTP_PASS"); found {
+		res.EmailConfig.Password = value
+	}
+
+	if value, found := os.LookupEnv("SMTP_PORT"); found {
+		mailPort, err := strconv.Atoi(value)
+		if err != nil {
+			log.Fatal("Config : invalid smtp port", err.Error())
+			return nil
+		}
+		res.EmailConfig.MailPort = mailPort
+	}
+
+	if value, found := os.LookupEnv("SMTP_HOST"); found {
+		res.EmailConfig.Host = value
 	}
 
 	return res
