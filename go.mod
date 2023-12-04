@@ -1,4 +1,4 @@
-module code-nexus
+module github.com/RianIhsan/go-code-nexus
 
 go 1.20
 
