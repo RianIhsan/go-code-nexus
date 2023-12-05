@@ -1,0 +1,68 @@
+basePath: /swagger/index.html
+definitions:
+  dto.TRegisterRequest:
+    properties:
+      email:
+        description: |-
+          Email of the user (required, should be a valid email address)
+          Example: john.doe@example.com
+          Required: true
+          Format: email
+        type: string
+      name:
+        description: |-
+          Name of the user (required)
+          Example: John Doe
+          Required: true
+        type: string
+      password:
+        description: |-
+          Password of the user (required, minimum length 8)
+          Example: mySecurePassword
+          Required: true
+          MinLength: 8
+        minLength: 8
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: Happy integration
+  title: CodeNexus API
+  version: "1.0"
+paths:
+  /api/v1/auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with the provided details
+      parameters:
+      - description: User registration details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: registration is successful, please check your email for email
+            verification
+          schema:
+            type: string
+        "400":
+          description: invalid payload" or "error validating payload" or "registration
+            failed
+          schema:
+            type: string
+      summary: Register a new user
+      tags:
+      - Auth
+schemes:
+- http
+swagger: "2.0"

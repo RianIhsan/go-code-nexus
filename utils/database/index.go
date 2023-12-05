@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"github.com/RianIhsan/go-code-nexus/config"
+	"github.com/RianIhsan/go-code-nexus/entities"
 	"github.com/gofiber/fiber/v2/log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -18,4 +19,17 @@ func BootDatabase(cnf config.Config) *gorm.DB {
 	}
 	log.Info("Database connected")
 	return db
+}
+
+func MigrateTable(db *gorm.DB) {
+	err := db.AutoMigrate(
+		entities.UserEntity{},
+		entities.UserDetailEntity{},
+		entities.TokenEntity{},
+	)
+	if err != nil {
+		log.Fatal("Failed to migrate table", err.Error())
+	} else {
+		log.Info("Table successfully migrated")
+	}
 }

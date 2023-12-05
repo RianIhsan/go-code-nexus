@@ -1,0 +1,81 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Happy integration",
+        "title": "CodeNexus API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/swagger/index.html",
+    "paths": {
+        "/api/v1/auth/signup": {
+            "post": {
+                "description": "Register a new user with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "description": "User registration details",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TRegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "registration is successful, please check your email for email verification",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid payload\" or \"error validating payload\" or \"registration failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.TRegisterRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "name",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "description": "Email of the user (required, should be a valid email address)\nExample: john.doe@example.com\nRequired: true\nFormat: email",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the user (required)\nExample: John Doe\nRequired: true",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password of the user (required, minimum length 8)\nExample: mySecurePassword\nRequired: true\nMinLength: 8",
+                    "type": "string",
+                    "minLength": 8
+                }
+            }
+        }
+    }
+}
