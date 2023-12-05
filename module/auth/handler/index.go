@@ -18,6 +18,15 @@ func NewAuthHandler(authService auth.IServiceAuth) auth.IHandlerAuth {
 	}
 }
 
+// @Summary Register a new user
+// @Description Register a new user with the provided details
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body dto.TRegisterRequest true "User registration details"
+// @Success 200 {string} string "registration is successful, please check your email for email verification"
+// @Failure 400 {string} string "invalid payload" or "error validating payload" or "registration failed"
+// @Router /api/v1/auth/signup [post]
 func (h AuthHandler) SignUp(c *fiber.Ctx) error {
 	var payload dto.TRegisterRequest
 	if err := c.BodyParser(&payload); err != nil {

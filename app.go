@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/RianIhsan/go-code-nexus/config"
+	_ "github.com/RianIhsan/go-code-nexus/docs"
 	"github.com/RianIhsan/go-code-nexus/middleware"
 	"github.com/RianIhsan/go-code-nexus/module/auth/handler"
 	rAuth "github.com/RianIhsan/go-code-nexus/module/auth/repository"
@@ -13,8 +14,15 @@ import (
 	"github.com/RianIhsan/go-code-nexus/utils/database"
 	"github.com/RianIhsan/go-code-nexus/utils/hashing"
 	"github.com/gofiber/fiber/v2"
+	"github.com/swaggo/fiber-swagger"
 )
 
+// @Title CodeNexus API
+// @version 1.0
+// @description Happy integration
+// @host localhost:3000
+// @BasePath /
+// @schemes http
 func main() {
 	app := fiber.New(fiber.Config{
 		AppName:       "Welcome to code nexus",
@@ -34,6 +42,8 @@ func main() {
 	authHandler := handler.NewAuthHandler(authService)
 
 	app.Use(middleware.Logging())
+
+	app.Get("/swagger/*", fiberSwagger.WrapHandler)
 
 	app.Get("/ping", func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
