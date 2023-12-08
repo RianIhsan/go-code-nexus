@@ -5,6 +5,7 @@ import "time"
 type UserEntity struct {
 	ID         int              `gorm:"column:id;primaryKey" json:"id"`
 	Name       string           `gorm:"column:name" json:"name"`
+	Avatar     string           `gorm:"column:avatar" json:"avatar"`
 	Email      string           `gorm:"column:email" json:"email"`
 	Password   string           `gorm:"column:password" json:"password"`
 	Role       string           `gorm:"column:role" json:"role"`
@@ -18,7 +19,6 @@ type UserEntity struct {
 type UserDetailEntity struct {
 	ID        int        `gorm:"column:id;primaryKey" json:"id"`
 	UserID    int        `gorm:"column:user_id;index" json:"user_id"`
-	Avatar    *string    `gorm:"column:avatar;index" json:"avatar"`
 	Address   *string    `gorm:"column:address" json:"address"`
 	Phone     *string    `gorm:"column:phone" json:"phone"`
 	Job       *string    `gorm:"column:job" json:"job"`

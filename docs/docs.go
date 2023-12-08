@@ -15,6 +15,52 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/auth/signin": {
+            "post": {
+                "description": "Sign in a user with the provided credentials",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign in a user",
+                "parameters": [
+                    {
+                        "description": "User login details",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TLoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Signin successfully",
+                        "schema": {
+                            "$ref": "#/definitions/dto.TLoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid payload\" or \"error validating payload",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "user not found\" or \"your account has not been verified\" or \"incorrect password",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/auth/signup": {
             "post": {
                 "description": "Register a new user with the provided details",
@@ -54,9 +100,135 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/auth/verify": {
+            "post": {
+                "description": "Verify user email with the provided token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Verify user email",
+                "parameters": [
+                    {
+                        "description": "Email verification details",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TVerificationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Your email has been successfully verified",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid payload\" or \"error validating payload\" or \"email verification failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/me": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Get information about the currently authenticated user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get current user",
+                "responses": {
+                    "200": {
+                        "description": "User information",
+                        "schema": {
+                            "$ref": "#/definitions/dto.TGetUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "user not found\" or \"Access denied",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "dto.TGetUserResponse": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "is_verified": {
+                    "type": "boolean"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TLoginRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "description": "Email of the user (required, should be a valid email address)\nExample: john.doe@example.com\nRequired: true\nFormat: email",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password of the user (required, minimum length 8)\nExample: mySecurePassword\nRequired: true\nMinLength: 8",
+                    "type": "string",
+                    "minLength": 8
+                }
+            }
+        },
+        "dto.TLoginResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.TRegisterRequest": {
             "type": "object",
             "required": [
@@ -79,6 +251,32 @@ const docTemplate = `{
                     "minLength": 8
                 }
             }
+        },
+        "dto.TVerificationRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "token"
+            ],
+            "properties": {
+                "email": {
+                    "description": "Email of the user (required, should be a valid email address)\nExample: john.doe@example.com\nRequired: true\nFormat: email",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "Token for the user (required)\nExample: 1HV3O4\nRequired: true\nMinLength: 6",
+                    "type": "string",
+                    "minLength": 6
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "description": "Type \"Bearer\" followed by a space and JWT token.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`
@@ -87,7 +285,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:3000",
-	BasePath:         "/swagger/index.html",
+	BasePath:         "/",
 	Schemes:          []string{"http"},
 	Title:            "CodeNexus API",
 	Description:      "Happy integration",

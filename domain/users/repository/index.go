@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"github.com/RianIhsan/go-code-nexus/domain/users"
 	"github.com/RianIhsan/go-code-nexus/entities"
-	"github.com/RianIhsan/go-code-nexus/module/users"
 	"gorm.io/gorm"
 )
 
@@ -22,6 +22,14 @@ func (r *UserRepository) FindEmail(email string) (*entities.UserEntity, error) {
 		Where("email = ? AND deleted_at IS NULL", email).
 		First(&user).
 		Error; err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (r *UserRepository) FindId(id int) (*entities.UserEntity, error) {
+	var user *entities.UserEntity
+	if err := r.db.Where("id = ? AND deleted_at IS NULL", id).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return user, nil
