@@ -19,4 +19,6 @@ func BootRouteUser(app *fiber.App, handler users.IHandlerUsers, jwtService jwt.I
 	userGroup := app.Group("api/v1/user")
 
 	userGroup.Get("/me", middleware.Protected(jwtService, userService), handler.GetCurrentUser)
+	userGroup.Post("/me/detail", middleware.Protected(jwtService, userService), handler.CreateUserDetail)
+	userGroup.Patch("me/avatar", middleware.Protected(jwtService, userService), handler.UpdateAvatar)
 }

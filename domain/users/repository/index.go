@@ -34,3 +34,22 @@ func (r *UserRepository) FindId(id int) (*entities.UserEntity, error) {
 	}
 	return user, nil
 }
+
+func (r *UserRepository) InsertUserDetail(user *entities.UserDetailEntity) (*entities.UserDetailEntity, error) {
+	if err := r.db.Create(&user).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (r *UserRepository) UpdateUserAvatar(userID int, avatarPath string) error {
+	user := &entities.UserEntity{ID: userID}
+
+	// Memperbarui hanya field Avatar
+	result := r.db.Model(user).Updates(map[string]interface{}{"avatar": avatarPath})
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}

@@ -11,6 +11,10 @@ type TGetUserResponse struct {
 	IsVerified bool   `json:"is_verified"`
 }
 
+type CreateImageFormatter struct {
+	Avatar string `json:"avatar"`
+}
+
 func GetUserResponse(user *entities.UserEntity) *TGetUserResponse {
 	userFormatter := &TGetUserResponse{}
 	userFormatter.id = user.ID
@@ -21,4 +25,10 @@ func GetUserResponse(user *entities.UserEntity) *TGetUserResponse {
 	userFormatter.IsVerified = user.IsVerified
 
 	return userFormatter
+}
+
+func UpdateAvatarResponse(user *entities.UserEntity) CreateImageFormatter {
+	response := CreateImageFormatter{}
+	response.Avatar = user.Avatar
+	return response
 }
