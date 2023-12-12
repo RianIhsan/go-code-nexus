@@ -52,7 +52,7 @@ func loadConfig() *Config {
 		}
 	}
 
-	if value, found := os.LookupEnv("SERVER_PORT"); found {
+	if value, found := os.LookupEnv("PORT"); found {
 		port, err := strconv.Atoi(value)
 		if err != nil {
 			log.Fatal("Config : invalid server port", err.Error())
