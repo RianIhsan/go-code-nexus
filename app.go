@@ -22,7 +22,7 @@ import (
 // @Title CodeNexus API
 // @version 1.0
 // @description Happy integration
-// @host localhost:3000
+// @host localhost:8080
 // @BasePath /
 // @schemes http
 // @securityDefinitions.apikey Bearer

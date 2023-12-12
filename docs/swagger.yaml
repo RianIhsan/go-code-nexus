@@ -1,5 +1,23 @@
 basePath: /
 definitions:
+  dto.TCreateUserDetailRequest:
+    properties:
+      address:
+        description: |-
+          Address of the user (optional)
+          Example: 123 Main Street
+        type: string
+      job:
+        description: |-
+          Job of the user (optional)
+          Example: Software Engineer
+        type: string
+      phone:
+        description: |-
+          Phone number of the user (optional)
+          Example: +1234567890
+        type: string
+    type: object
   dto.TGetUserResponse:
     properties:
       avatar:
@@ -204,6 +222,73 @@ paths:
       security:
       - Bearer: []
       summary: Get current user
+      tags:
+      - User
+  /api/v1/user/me/avatar:
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Update the avatar of the currently authenticated user
+      parameters:
+      - description: Image file to upload
+        in: formData
+        name: avatar
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Avatar update success
+          schema:
+            type: string
+        "400":
+          description: Invalid request or error uploading image
+          schema:
+            type: string
+        "401":
+          description: User not found or unauthorized
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Update user avatar
+      tags:
+      - User
+  /api/v1/user/me/detail:
+    post:
+      consumes:
+      - application/json
+      description: Create user detail for the currently authenticated user
+      parameters:
+      - description: User detail information
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TCreateUserDetailRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User detail created successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid input format
+          schema:
+            type: string
+        "401":
+          description: User not found" or "Access denied
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Create user detail
       tags:
       - User
 schemes:
